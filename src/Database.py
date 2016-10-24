@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import networkx as nx
 from abc import ABCMeta, abstractmethod
 
 
@@ -8,11 +9,12 @@ class Database:
     __metaclass__ = ABCMeta
 
     def __init__(self):
-        self.feat_vects = None
+        pass
 
     @abstractmethod
     def load_data(self):
         pass
+
 
 class DatabaseSimepar(Database):
 
@@ -59,13 +61,12 @@ class DatabaseSimepar(Database):
         # Opening the data file
         with open(self.file_path) as feat_file:
             for line in feat_file:
-                splited_line = np.asarray(line.strip().split(','))
+                split_line = np.asarray(line.strip().split(','))
                 x = []
                 for c in self.used_columns_idx:
                     if c >= self.data_start_index:
-                        x.append(float(splited_line[c]))
+                        x.append(float(split_line[c]))
                     else:
-                        x.append(splited_line[c])
+                        x.append(split_line[c])
                 feat_vects.append(x)
-        self.feat_vects = feat_vects
         return feat_vects
