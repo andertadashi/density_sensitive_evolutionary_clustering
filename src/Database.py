@@ -16,6 +16,48 @@ class Database:
         pass
 
 
+# Functions for dealing with Fisher's Iris dataset.
+class DatabaseIris(Database):
+    # Function to generate vectors from the data. (also used to return length of dataset).
+
+    def load_data(self):
+        feat_vects = []
+        # Opening the data file
+        with open("../database/iris.data.txt") as feat_file:
+            for line in feat_file:
+                x = []
+                # Initiating a counter to count up to the label.
+                count = 1
+                # Splitting feature by comma and line.
+                for w in line.strip().split(','):
+                    # If the counter is less than the label index (feature 5).
+                    if count < 5:
+                        # Converting string representations into floats
+                        x.append(float(w))
+                    # When it reaches the label, ignore it.
+                    else:
+                        continue
+                    count += 1
+                feat_vects.append(x)
+        return feat_vects
+
+    # Function to generate a corresponding label array from the data.
+    def get_label_vects(self):
+        label_vects = []
+        # Opening the data file
+        with open("../database/iris.data.txt") as feat_file:
+            for line in feat_file:
+                # Initiating a counter to count up to the label.
+                count = 1
+                # Splitting feature by comma and line.
+                for w in line.strip().split(','):
+                    # When the counter reaches the label index (feature 5), append it.
+                    if (count >= 5):
+                        label_vects.append(w)
+                    count += 1
+        return label_vects
+
+
 class DatabaseSimepar(Database):
 
     def __init__(self, file_path):
