@@ -50,7 +50,7 @@ class Cluster:
         distances = {}
         for (a, b) in itertools.combinations(range(self.N), 2):
             dist = nx.dijkstra_path_length(self.graph, a, b, 'distance')
-            distances[(a, b)] = dist
+            distances[tuple(sorted((a, b)))] = dist
             print "a={} b={} dist={}".format(a, b, dist)
         self.distances = distances
 
