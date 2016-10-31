@@ -3,7 +3,7 @@
 from Algorithms import Cluster
 from Database import DatabaseSimepar
 from Dissimilarity import DensityDistance
-from src.Database import DatabaseIris
+from Database import DatabaseIris
 
 database = DatabaseIris()
 dissimilarity = DensityDistance(rho=1.2)
