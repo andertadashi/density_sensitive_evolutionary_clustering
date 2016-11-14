@@ -11,22 +11,20 @@ class Cluster:
         self.database = database
         self.max_iterations = max_iterations
         self.K = K
-        self.P = []
+        self.P = []  # population at time t
         self.P_size = P_size
         self.data = database.load_data()
         self.N = len(self.data)
         self.graph = None
         self.dissimilarity = dissimilarity
         self.assigned_to_cluster = []
-        self.create_graph()
-        self.compute_distances()
-        self.distances = None
+        self.distances = self.compute_distances()
 
     def population_random_initialization(self):
         print "population_random_initialization"
         population = []
         i = 0
-        while len(population) <= self.P_size and i <= self.P_size * 10:
+        while len(population) < self.P_size and i <= self.P_size * 10:
             c = sorted(random.sample(range(self.N), self.K + 1))
             if c not in population:
                 population.append(c)
@@ -47,38 +45,54 @@ class Cluster:
 
     def compute_distances(self):
         print "compute_distances"
+
+        self.create_graph()
+
         distances = {}
         for (a, b) in itertools.combinations(range(self.N), 2):
             dist = nx.dijkstra_path_length(self.graph, a, b, 'distance')
             distances[tuple(sorted((a, b)))] = dist
             print "a={} b={} dist={}".format(a, b, dist)
-        self.distances = distances
+
+        return distances
 
     def assign_points_to_clusters(self, t):
         print "assign_points_to_clusters"
+
         P_cluster_dist = []
 
         # population
         for p_idx, p in enumerate(self.P[t]):
+            print("p_idx={} p={}".format(p_idx, p))
             data_cluster_dist = []
 
             # data index
             for d_idx in range(len(self.data)):
+                # print("d_idx={}".format(d_idx))
                 min_dist = None
                 min_idx = None
-                print ""
+
                 # cluster
                 for c_idx, c in enumerate(p):
+
+                    # if source and destination is the same continue
+                    if d_idx == c:
+                        continue
+
+                    # print("c_idx={} c={}".format(d_idx, c))
+
                     # compute distance with data[d_idx] and C[c_idx]
                     dist = self.distances[tuple(sorted((d_idx, c)))]
-                    print("{} {} dist is {}".format(d_idx, c, dist))
+                    # print("{} {} dist is {}".format(d_idx, c, dist))
+
                     if min_dist is None or dist < min_dist:
                         min_dist = dist
                         min_idx = c_idx
+
                 data_cluster_dist.append((d_idx, p[min_idx], min_dist))
 
             P_cluster_dist.append(data_cluster_dist)
-        return P_cluster_dist
+        return np.asarray(P_cluster_dist)
 
     def compute(self):
         print "compute"
@@ -91,8 +105,10 @@ class Cluster:
 
             # assign points to clusters
             pcluster = self.assign_points_to_clusters(t)
-            print pcluster
+            print("#pcluster={} pcluster={}".format(pcluster.shape, pcluster))
             # compute objective function
+
+
 
             if t != 0:
                 # select P(t) from P(t-1)
