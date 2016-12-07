@@ -52,10 +52,36 @@ class DatabaseIris(Database):
                 # Splitting feature by comma and line.
                 for w in line.strip().split(','):
                     # When the counter reaches the label index (feature 5), append it.
-                    if (count >= 5):
+                    if count >= 5:
                         label_vects.append(w)
                     count += 1
         return label_vects
+
+
+class TwoDimensionData(Database):
+
+    def __init__(self, path, field_separator='\t'):
+        Database.__init__(self)
+        self.path = path
+        self.field_separator = field_separator
+        self.data = []
+        self.labels = []
+
+    def read_file(self):
+        with open(self.path) as row_file:
+            for line in row_file:
+                split_line = line.strip().split(self.field_separator)
+                x = float(split_line[0])
+                y = float(split_line[1])
+                l = int(split_line[2])
+                self.data.append([x, y])
+                self.labels.append(l)
+
+    def load_data(self):
+        return self.data
+
+    def get_label_vects(self):
+        return self.labels
 
 
 class DatabaseSimepar(Database):
