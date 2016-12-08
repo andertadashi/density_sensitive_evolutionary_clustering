@@ -3,6 +3,7 @@ import numpy as np
 import networkx as nx
 import itertools
 import math
+import matplotlib.pyplot as plt
 from abc import ABCMeta, abstractmethod
 
 
@@ -275,7 +276,10 @@ class Cluster:
             else:
                 t -= 1
                 print("result t={} \nP[{}]={}\nP_dist[{}]={}".format(t, t, self.P[t], t, self.P_cluster_dist[t]))
+                labels = np.asarray(self.P_cluster_dist[t])
+                self.database.plot(self.data, labels[:, 1])
                 break
+
 
 
 

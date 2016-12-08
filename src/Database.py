@@ -1,8 +1,9 @@
 import random
 import numpy as np
 import networkx as nx
+import matplotlib.pyplot as plt
 from abc import ABCMeta, abstractmethod
-
+import matplotlib.colors as colors
 
 class Database:
 
@@ -15,6 +16,21 @@ class Database:
     def load_data(self):
         pass
 
+    def plot(self, data, labels):
+        # plt.clf()
+        data_np = np.asarray(data)
+        labels_np = np.asarray(labels)
+        colors_values = colors.cnames.values()
+
+        print("#data={} labels={}".format(len(data), len(labels)))
+        ls = np.unique(labels_np)
+        print ls
+
+        for l in ls:
+            d = data_np[labels_np == int(l)]
+            plt.scatter(d[:, 0], d[:, 1], c=colors_values[int(l)])
+
+        plt.show()
 
 # Functions for dealing with Fisher's Iris dataset.
 class DatabaseIris(Database):
@@ -66,6 +82,7 @@ class TwoDimensionData(Database):
         self.field_separator = field_separator
         self.data = []
         self.labels = []
+        self.read_file()
 
     def read_file(self):
         with open(self.path) as row_file:
