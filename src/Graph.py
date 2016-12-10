@@ -59,7 +59,7 @@ class GraphTest:
                         continue
                     d = graph_tool.topology.shortest_distance(g, source=g.vertex(i), target=g.vertex(j), weights=e_weight)
                     dict[tuple(sorted([i, j]))] = d
-                    print("i={} j={} dist={}".format(i, j, d))
+                    print("path={} i={} j={} dist={}".format(path, i, j, d))
             with open(pickle_filename, "wb") as output_file:
                 pickle.dump(dict, output_file)
             return dict
