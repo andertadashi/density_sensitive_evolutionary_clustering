@@ -7,14 +7,12 @@ from Dissimilarity import DensityDistance
 from Database import DatabaseIris, TwoDimensionData
 
 # database = DatabaseIris()
-
-a = ['flame.txt' ,  'jain.txt' ]
-#a = ['Aggregation.txt'  ,'Compound.txt'  ,'D31.txt'  ,'flame.txt' ,  'jain.txt' , 'pathbased.txt' , 'R15.txt' , 'spiral.txt']
-for f in reversed(a):
-    print f
+a = ['Compound.txt'  , 'flame.txt' ,'D31.txt',  'jain.txt' , 'pathbased.txt' , 'R15.txt' , 'spiral.txt']
+#a = ['Aggregation.txt' ] 
+for f in a: 
     fi = '../database/{}'.format(f)
     database = TwoDimensionData(fi, '\t')
-    for rho in np.arange(1.0, 3, 0.2):
+    for rho in np.arange(1.4, 3, 0.4):
         dissimilarity = DensityDistance(rho=rho)
 
         cluster = Cluster(database, dissimilarity, P_size=5, K=2, max_iterations=10)
