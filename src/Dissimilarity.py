@@ -8,7 +8,7 @@ class Dissimilarity:
     __metaclass__ = ABCMeta
 
     def __init__(self):
-
+        self.rho = 0
         pass
 
     @abstractmethod

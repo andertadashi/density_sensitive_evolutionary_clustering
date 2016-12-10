@@ -3,9 +3,10 @@
 from Algorithms import Cluster
 from Database import DatabaseSimepar
 from Dissimilarity import DensityDistance
-from Database import DatabaseIris
+from Database import DatabaseIris, TwoDimensionData
 
-database = DatabaseIris()
+# database = DatabaseIris()
+database = TwoDimensionData('../database/spiral.txt', '\t')
 dissimilarity = DensityDistance(rho=1.2)
 
 cluster = Cluster(database, dissimilarity, P_size=5, K=3, max_iterations=10)

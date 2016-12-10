@@ -5,7 +5,7 @@ import itertools
 import math
 import matplotlib.pyplot as plt
 from abc import ABCMeta, abstractmethod
-
+from Graph import GraphTest
 
 class Cluster:
 
@@ -19,7 +19,6 @@ class Cluster:
         self.P_size = P_size  # population size
         self.data = database.load_data()
         self.N = len(self.data)
-        self.graph = None
         self.dissimilarity = dissimilarity
         self.assigned_to_cluster = []
         self.distances = self.compute_distances()
@@ -40,35 +39,19 @@ class Cluster:
         print("P[0].size={}".format(len(population)))
         return population
 
+
     def get_random_indices(self, range_sample, qtd):
         indices = sorted(random.sample(range(range_sample), qtd))
         return indices
 
-    def create_graph(self):
-        if self.debug:
-            print "\ncreate_graph"
-        self.graph = nx.Graph()
-        for i in range(self.N):
-            for j in range(self.N):
-                if i == j:
-                    continue
-                dist = self.dissimilarity.distance(i, j)
-                # print dist
-                assert dist >= 0, "dist is negative!"
-                self.graph.add_edge(i, j, distance=dist)
 
     def compute_distances(self):
         if self.debug:
             print "\ncompute_distances"
 
-        self.create_graph()
+        g = GraphTest()
 
-        distances = {}
-        for (a, b) in itertools.combinations(range(self.N), 2):
-            dist = nx.dijkstra_path_length(self.graph, a, b, 'distance')
-            distances[tuple(sorted((a, b)))] = dist
-            if self.debug:
-                print "a={} b={} dist={}".format(a, b, dist)
+        distances = g.get_graph_dictionary(self.database.path, self.data, self.dissimilarity)
 
         return distances
 
@@ -277,7 +260,10 @@ class Cluster:
                 t -= 1
                 print("result t={} \nP[{}]={}\nP_dist[{}]={}".format(t, t, self.P[t], t, self.P_cluster_dist[t]))
                 labels = np.asarray(self.P_cluster_dist[t])
-                self.database.plot(self.data, labels[:, 1])
+                print("===> labels={}".format(labels))
+                l = labels[0][:, 1]
+                print ("===> l={}".format(l))
+                self.database.plot(self.data, l)
                 break
 
 

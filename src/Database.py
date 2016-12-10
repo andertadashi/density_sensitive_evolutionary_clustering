@@ -5,11 +5,13 @@ import matplotlib.pyplot as plt
 from abc import ABCMeta, abstractmethod
 import matplotlib.colors as colors
 
+
 class Database:
 
     __metaclass__ = ABCMeta
 
     def __init__(self):
+        self.path = ""
         pass
 
     @abstractmethod
@@ -27,19 +29,31 @@ class Database:
         print ls
 
         for l in ls:
-            d = data_np[labels_np == int(l)]
-            plt.scatter(d[:, 0], d[:, 1], c=colors_values[int(l)])
+            print("labels_np={}".format(labels_np))
+            print("l={}".format(l))
+
+            d = data_np[labels_np == l]
+            print d
+            x = d[:, 0]
+            y = d[:, 1]
+            print("x={} y={}".format(x.shape, y.shape))
+            color_idx = int(l) % len(colors_values)
+            plt.scatter(x, y, c=colors_values[color_idx])
 
         plt.show()
+
 
 # Functions for dealing with Fisher's Iris dataset.
 class DatabaseIris(Database):
     # Function to generate vectors from the data. (also used to return length of dataset).
 
+    def __init__(self):
+        self.path = "../database/iris.data.txt"
+
     def load_data(self):
         feat_vects = []
         # Opening the data file
-        with open("../database/iris.data.txt") as feat_file:
+        with open(self.path) as feat_file:
             for line in feat_file:
                 x = []
                 # Initiating a counter to count up to the label.
@@ -61,7 +75,7 @@ class DatabaseIris(Database):
     def get_label_vects(self):
         label_vects = []
         # Opening the data file
-        with open("../database/iris.data.txt") as feat_file:
+        with open(self.path) as feat_file:
             for line in feat_file:
                 # Initiating a counter to count up to the label.
                 count = 1
