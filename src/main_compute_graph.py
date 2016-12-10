@@ -18,6 +18,6 @@ for f in reversed(a):
     for rho in np.arange(1.0, 3.4, 0.2):
         dissimilarity = DensityDistance(rho=rho)
 
-        cluster = Cluster(database, dissimilarity, P_size=15, K=3, max_iterations=100)
+        cluster = Cluster(database, dissimilarity, P_size=15, K=3, max_iterations=2)
 
         cluster.compute()

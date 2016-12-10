@@ -212,8 +212,13 @@ class Cluster:
             # index to mutate in p
             p_idx = self.get_random_indices(len(p), 1)
             # new data idx
-            d_idx = self.get_random_indices(self.N, 1)
             p_mutated = p.copy()
+            if p_mutated[p_idx] + 10 < self.N:
+                d_idx = p_mutated[p_idx] + 10
+            else:
+                d_idx = p_mutated[p_idx] - 10
+            # d_idx = self.get_random_indices(self.N, 1)
+
             p_mutated[p_idx] = d_idx
             if self.debug:
                 print("p_mutated={}".format(p_mutated))

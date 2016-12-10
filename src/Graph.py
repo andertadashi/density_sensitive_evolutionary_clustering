@@ -42,6 +42,7 @@ class GraphTest:
                 for j in range(N):
                     if i == j:
                         continue
+                    # TODO corrigir
                     d = dissimilarity.distance(i, j)
                     # print dist
                     assert dist >= 0, "dist is negative!"
@@ -57,7 +58,12 @@ class GraphTest:
                 for j in range(N):
                     if i == j:
                         continue
-                    d = graph_tool.topology.shortest_distance(g, source=g.vertex(i), target=g.vertex(j), weights=e_weight)
+                    if dissimilarity.rho == 1.0:
+                        d = graph_tool.topology.shortest_distance(g, source=g.vertex(i), target=g.vertex(j),
+                                                                  weights=e_weight)
+                    else:
+                        d = graph_tool.topology.shortest_distance(g, source=g.vertex(i), target=g.vertex(j),
+                                                                  weights=e_weight)
                     dict[tuple(sorted([i, j]))] = d
                     print("path={} i={} j={} dist={}".format(path, i, j, d))
             with open(pickle_filename, "wb") as output_file:
