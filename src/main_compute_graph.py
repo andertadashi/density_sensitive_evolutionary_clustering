@@ -20,4 +20,4 @@ for f in reversed(a):
 
         cluster = Cluster(database, dissimilarity, P_size=15, K=3, max_iterations=100)
 
-        # cluster.compute()
+        cluster.compute()

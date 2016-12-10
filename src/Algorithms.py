@@ -263,7 +263,7 @@ class Cluster:
                 print("===> labels={}".format(labels))
                 l = labels[0][:, 1]
                 print ("===> l={}".format(l))
-                self.database.plot(self.data, l)
+                self.database.plot(self.dissimilarity.rho, self.data, l)
                 break
 
 
