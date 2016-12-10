@@ -22,6 +22,8 @@ class EuclideanDistance(Dissimilarity):
         Dissimilarity.__init__(self)
 
     def distance(self, a, b):
+        a = np.asarray(a)
+        b = np.asarray(b)
         return np.linalg.norm(a-b)
 
 
@@ -32,5 +34,11 @@ class DensityDistance(Dissimilarity):
         self.rho = rho
 
     def distance(self, a, b):
-        L = pow(self.rho, np.linalg.norm(a-b)) - 1
+        a = np.asarray(a)
+        b = np.asarray(b)
+        if self.rho == 1.0:
+            L = np.linalg.norm(a - b)
+        else:
+            L = pow(self.rho, np.linalg.norm(a-b)) - 1
+        # print("a={} b={} a-b={} dist_euc={} dist={}".format(a, b, a-b, np.linalg.norm(a-b), L))
         return L
