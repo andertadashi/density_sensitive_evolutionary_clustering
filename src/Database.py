@@ -68,7 +68,7 @@ class DatabaseIris(Database):
 
     def __init__(self):
         Database.__init__(self)
-        self.path = "../database/iris.data.txt"
+        self.path = "../datasets/iris.data.txt"
 
     def load_data(self):
         feat_vects = []

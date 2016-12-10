@@ -7,7 +7,7 @@ from sklearn import metrics
 from Dissimilarity import DensityDistance
 from Database import TwoDimensionData
 
-database = TwoDimensionData("../database/D31.txt", '\t')
+database = TwoDimensionData("../datasets/D31.txt", '\t')
 #dissimilarity = DensityDistance(rho=1.2)
 
 data = np.asarray(database.data)

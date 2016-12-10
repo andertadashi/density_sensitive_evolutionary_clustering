@@ -10,7 +10,7 @@ from Database import DatabaseIris, TwoDimensionData
 a = ['Compound.txt'  , 'flame.txt' ,'D31.txt',  'jain.txt' , 'pathbased.txt' , 'R15.txt' , 'spiral.txt']
 #a = ['Aggregation.txt' ] 
 for f in a: 
-    fi = '../database/{}'.format(f)
+    fi = '../datasets/{}'.format(f)
     database = TwoDimensionData(fi, '\t')
     for rho in np.arange(1.4, 3, 0.4):
         dissimilarity = DensityDistance(rho=rho)

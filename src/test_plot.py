@@ -10,7 +10,7 @@ from Graph import GraphTest
 # from graph_tool.all import *
 
 print("database reading")
-database = TwoDimensionData("../database/R15.txt", '\t')
+database = TwoDimensionData("../datasets/R15.txt", '\t')
 
 print("dissimilarity class")
 dissimilarity = DensityDistance(rho=1.2)
