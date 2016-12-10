@@ -1,6 +1,8 @@
-import random
+# -*- coding: utf-8 -*-
+import matplotlib
+matplotlib.use('Agg')
+import random, os
 import numpy as np
-import networkx as nx
 import matplotlib.pyplot as plt
 from abc import ABCMeta, abstractmethod
 import matplotlib.colors as colors
@@ -18,8 +20,14 @@ class Database:
     def load_data(self):
         pass
 
-    def plot(self, data, labels):
+    def plot(self, rho, data, labels):
         # plt.clf()
+
+        path = self.path
+
+        base_name = os.path.basename(path)
+        name = os.path.splitext(base_name)[0]
+
         data_np = np.asarray(data)
         labels_np = np.asarray(labels)
         colors_values = colors.cnames.values()
@@ -27,6 +35,15 @@ class Database:
         print("#data={} labels={}".format(len(data), len(labels)))
         ls = np.unique(labels_np)
         print ls
+
+        fig = plt.figure()
+        title_fig = 'Dataset {}'.format(name)
+        fig.suptitle(title_fig, fontsize=18, fontweight='bold')
+        ax = fig.add_subplot(111)
+        fig.subplots_adjust(top=0.85)
+        ax.set_title('rho={}'.format(rho))
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
 
         for l in ls:
             print("labels_np={}".format(labels_np))
@@ -38,9 +55,11 @@ class Database:
             y = d[:, 1]
             print("x={} y={}".format(x.shape, y.shape))
             color_idx = int(l) % len(colors_values)
-            plt.scatter(x, y, c=colors_values[color_idx])
+            ax.scatter(x, y, c=colors_values[color_idx])
 
-        plt.show()
+        fig_name = "../images/{}_{}.png".format(name, rho)
+        fig.savefig(fig_name)
+        # plt.show()
 
 
 # Functions for dealing with Fisher's Iris dataset.
@@ -48,6 +67,7 @@ class DatabaseIris(Database):
     # Function to generate vectors from the data. (also used to return length of dataset).
 
     def __init__(self):
+        Database.__init__(self)
         self.path = "../database/iris.data.txt"
 
     def load_data(self):
