@@ -12,7 +12,7 @@ a = ['D31.txt', 'Aggregation.txt']
 for f in a: 
     fi = '../datasets/{}'.format(f)
     database = TwoDimensionData(fi, '\t')
-    for rho in np.arange(1.0, 3.8, 0.4):
+    for rho in np.arange(1.2, 3.8, 0.4):
         dissimilarity = DensityDistance(rho=rho)
 
         cluster = Cluster(database, dissimilarity, P_size=5, K=31, max_iterations=10)
