@@ -13,7 +13,9 @@ from Database import DatabaseIris, TwoDimensionData
 # a = ['flame.txt', 'jain.txt']
 #a = [('spiral.txt', 3)]
 #a = [('R15.txt', 15)]
-a = [('Compound.txt', 6)]
+#a = [('Compound.txt', 6)]
+
+a = [('pathbased.txt', 3)]
 
 results = []
 
