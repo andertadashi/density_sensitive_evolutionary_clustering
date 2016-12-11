@@ -304,7 +304,7 @@ class Cluster:
                 print "info score normalized ", metrics.normalized_mutual_info_score(np.asarray(self.database.labels),
                                                                                      np.asarray(l))
                 print ("===> l={}".format(l))
-                self.database.plot(self.dissimilarity.rho, self.data, l)
+                self.database.plot(self.dissimilarity.rho, self.data, l, ind)
                 break
 
 

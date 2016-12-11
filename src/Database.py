@@ -22,7 +22,7 @@ class Database:
     def load_data(self):
         pass
 
-    def plot(self, rho, data, labels):
+    def plot(self, rho, data, labels, best_individual):
         # plt.clf()
 
         path = self.path
@@ -35,7 +35,7 @@ class Database:
         colors_values = colors.cnames.values()
 
         print("#data={} labels={}".format(len(data), len(labels)))
-        ls = np.unique(labels_np)
+        ls = np.sort(np.unique(labels_np))
         print ls
 
         fig = plt.figure()
@@ -58,6 +58,9 @@ class Database:
             print("x={} y={}".format(x.shape, y.shape))
             color_idx = int(l) % len(colors_values)
             ax.scatter(x, y, c=self.colours[l_idx])
+
+        for best_idv_idx, best_idv in enumerate(best_individual):
+            ax.scatter(data_np[best_idv][0], data_np[best_idv][1], s=250, marker='*', c=self.colours[best_idv_idx])
 
         fig_name = "../images/{}_{}.png".format(name, rho)
         fig.savefig(fig_name)
