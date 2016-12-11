@@ -300,12 +300,15 @@ class Cluster:
                 for i in ind:
                     l[i] = i
 
-                print "info score ", metrics.adjusted_mutual_info_score(np.asarray(self.database.labels), np.asarray(l))
-                print "info score normalized ", metrics.normalized_mutual_info_score(np.asarray(self.database.labels),
+                score = metrics.adjusted_mutual_info_score(np.asarray(self.database.labels), np.asarray(l))
+                print "info score ", score
+                score_normalized = metrics.normalized_mutual_info_score(np.asarray(self.database.labels),
                                                                                      np.asarray(l))
+                print "info score normalized ", score_normalized
                 print ("===> l={}".format(l))
                 self.database.plot(self.dissimilarity.rho, self.data, l, ind)
-                break
+
+                return score, score_normalized
 
 
 
