@@ -120,6 +120,9 @@ class Cluster:
         self.P_cluster_dist[t] = population[sorted_indices]
         self.P[t] = np.asarray(self.P[t])[sorted_indices]
 
+    def select_unique_array_of_array(self, a):
+        a = np.asarray(a)
+        return np.vstack({tuple(row) for row in a})
 
     def select_best_clusters(self, t):
         if self.debug:
@@ -161,6 +164,8 @@ class Cluster:
         qtd_crossover = int(len(self.P[t]) * self.crossover_percentage)
 
         idxs_for_crossover = self.get_random_indices(len(self.P[t]), qtd_crossover)
+        random.shuffle(idxs_for_crossover)
+
         print("qtd_crossover={} idxs_for_crossover={}".format(qtd_crossover, idxs_for_crossover))
 
 
@@ -168,6 +173,7 @@ class Cluster:
         for i_mutation in range(len(idxs_for_crossover)-1):
             c0_idx = idxs_for_crossover[i_mutation]
             c1_idx = idxs_for_crossover[i_mutation + 1]
+            # c1_idx = self.get_random_indices(self.N, 1)
             c0 = self.P[t][c0_idx].copy()
             c1 = self.P[t][c1_idx].copy()
 
@@ -193,7 +199,7 @@ class Cluster:
         new_pop = np.append(self.P[t], np.asarray(new_pop), axis=0)
 
         # http://stackoverflow.com/questions/16970982/find-unique-rows-in-numpy-array
-        self.P[t] = new_pop  #np.vstack(set(map(tuple, new_pop)))
+        self.P[t] = np.vstack(set(map(tuple, new_pop)))
 
     def mutate(self, t):
         if self.debug:
