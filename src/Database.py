@@ -14,7 +14,9 @@ class Database:
 
     def __init__(self):
         self.path = ""
-        pass
+        self.colours = ["#FF0000", "#0000FF", "#00FF00", "#00CCFF", "#FF33CC", "#FFFF00", "#000000", "#CCCCCC",
+                        "#522900", "#FFFFCC", "#99CC00", "#FF9999", "#336699", "#006600", "#CCFFFF", "#CCCC00",
+                        "#FFCCFF", "#9900FF", "#006666", "#993366"]
 
     @abstractmethod
     def load_data(self):
@@ -45,7 +47,7 @@ class Database:
         ax.set_xlabel('x')
         ax.set_ylabel('y')
 
-        for l in ls:
+        for l_idx, l in enumerate(ls):
             print("labels_np={}".format(labels_np))
             print("l={}".format(l))
 
@@ -55,7 +57,7 @@ class Database:
             y = d[:, 1]
             print("x={} y={}".format(x.shape, y.shape))
             color_idx = int(l) % len(colors_values)
-            ax.scatter(x, y, c=colors_values[color_idx])
+            ax.scatter(x, y, c=self.colours[l_idx])
 
         fig_name = "../images/{}_{}.png".format(name, rho)
         fig.savefig(fig_name)

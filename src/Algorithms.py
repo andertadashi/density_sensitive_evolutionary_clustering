@@ -201,6 +201,26 @@ class Cluster:
         # http://stackoverflow.com/questions/16970982/find-unique-rows-in-numpy-array
         self.P[t] = np.vstack(set(map(tuple, new_pop)))
 
+    def mutate_paper_function(self, individual, idx):
+        """
+
+        :param individual: individual to be mutated
+        :param idx: position of individual to be mutated
+        :return: new cluster idx
+        """
+        cluster = individual[idx]
+        if random.choice([True, False]):
+            new_cluster = cluster + int(math.floor((self.N - cluster) * random.random() + 1))
+        else:
+            new_cluster = cluster - int(math.floor((cluster - 1) * random.random() + 1))
+
+        # if is out or range get random idx
+        if new_cluster >= self.N or new_cluster < 0:
+            new_cluster = self.get_random_indices(self.N, 1)
+
+        print("mutation_paper cluster={} mutated={}".format(cluster, new_cluster))
+        return new_cluster
+
     def mutate(self, t):
         if self.debug:
             print("\nt={} mutate".format(t))
@@ -216,13 +236,18 @@ class Cluster:
                 print("p={}".format(p))
             # index to mutate in p
             p_idx = self.get_random_indices(len(p), 1)
+
             # new data idx
             p_mutated = p.copy()
-            if p_mutated[p_idx] + 10 < self.N:
-                d_idx = p_mutated[p_idx] + 10
-            else:
-                d_idx = p_mutated[p_idx] - 10
+
+            # if p_mutated[p_idx] + 10 < self.N:
+            #     d_idx = p_mutated[p_idx] + 10
+            # else:
+            #     d_idx = p_mutated[p_idx] - 10
+
             # d_idx = self.get_random_indices(self.N, 1)
+
+            d_idx = self.mutate_paper_function(p, p_idx)
 
             p_mutated[p_idx] = d_idx
             if self.debug:
