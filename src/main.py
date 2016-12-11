@@ -15,7 +15,7 @@ for f in a:
     fi = '../datasets/{}'.format(f)
     database = TwoDimensionData(fi, '\t')
     # for rho in np.arange(1.0, 3.4, 0.2):
-    for rho in [1.8]:
+    for rho in [2.8]:
         dissimilarity = DensityDistance(rho=rho)
 
         cluster = Cluster(database, dissimilarity, P_size=50, K=3, max_iterations=100)

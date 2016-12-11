@@ -288,11 +288,17 @@ class Cluster:
                 # mutate P(t)
                 self.mutate(t)
             else:
-                t -= 1
+
+                t -= 1  # last valid execution is t-1
+
                 print("result t={} \nP[{}]={}\nP_dist[{}]={}".format(t, t, self.P[t], t, self.P_cluster_dist[t]))
                 labels = np.asarray(self.P_cluster_dist[t])
                 print("===> labels={}".format(labels))
                 l = labels[0][:, 1]
+                ind = self.P[t][0]
+
+                for i in ind:
+                    l[i] = i
 
                 print "info score ", metrics.adjusted_mutual_info_score(np.asarray(self.database.labels), np.asarray(l))
                 print "info score normalized ", metrics.normalized_mutual_info_score(np.asarray(self.database.labels),
