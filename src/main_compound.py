@@ -26,8 +26,8 @@ for f, K in a:
     base_name = os.path.basename(fi)
     name = os.path.splitext(base_name)[0]
 
-    # for rho in np.arange(1.0, 3.4, 0.2):
-    for rho in [30.0]:
+    for rho in np.arange(1.0, 3.4, 0.2):
+    #for rho in [30.0]:
         dissimilarity = DensityDistance(rho=rho)
 
         cluster = Cluster(database, dissimilarity, P_size=150, K=K, max_iterations=50)
