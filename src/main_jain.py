@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+matplotlib.use('Agg')
+
 import numpy as np
 import os
 from Algorithms import Cluster
@@ -12,8 +16,8 @@ from Database import DatabaseIris, TwoDimensionData
 #a = ['Aggregation.txt' ] 
 # a = ['flame.txt', 'jain.txt']
 #a = [('spiral.txt', 3)]
-
-a = [('pathbased.txt', 3)]
+#a = [('pathbased.txt', 3)]
+a = [('jain.txt', 2)]
 
 results = []
 
@@ -28,7 +32,7 @@ for f, K in a:
     # for rho in [2.8]:
         dissimilarity = DensityDistance(rho=rho)
 
-        cluster = Cluster(database, dissimilarity, P_size=50, K=K, max_iterations=50)
+        cluster = Cluster(database, dissimilarity, P_size=50, K=K, max_iterations=100)
 
         score, score_normalized = cluster.compute()
         results.append((name, K, rho, score, score_normalized))
