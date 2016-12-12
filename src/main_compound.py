@@ -30,7 +30,7 @@ for f, K in a:
     for rho in [30.0]:
         dissimilarity = DensityDistance(rho=rho)
 
-        cluster = Cluster(database, dissimilarity, P_size=50, K=K, max_iterations=50)
+        cluster = Cluster(database, dissimilarity, P_size=150, K=K, max_iterations=50)
 
         score, score_normalized = cluster.compute()
         results.append((name, K, rho, score, score_normalized))
