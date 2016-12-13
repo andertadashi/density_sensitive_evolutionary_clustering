@@ -30,8 +30,8 @@ for t in range(10):
         name = os.path.splitext(base_name)[0]
         rhos = {}
         # for rho in np.arange(1.0, 3.4, 0.2):
-        # for rho in [1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 10, 30, 100]:
-        for rho in [1.0, 1.2, 1.4]:
+        for rho in [1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 10, 30, 100]:
+        # for rho in [1.0, 1.2, 1.4]:
 
             if (f, rho) in results:
                 result_vect = results[(f, rho)]
