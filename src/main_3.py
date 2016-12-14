@@ -15,12 +15,11 @@ from Database import DatabaseIris, TwoDimensionData
 #a = [('R15.txt', 15)]
 #a = [('Compound.txt', 6)]
 
-a = [('flame.txt', 2), ('pathbased.txt', 3), ('spiral.txt', 3), ('jain.txt', 2),
-     ('Compound.txt', 6), ('R15.txt', 15)]
+a = [('Compound.txt', 6)]
 
 results_lines = []
 results = {}
-for t in range(5):
+for t in range(7):
     file_dict = {}
     for f, K in a:
 
